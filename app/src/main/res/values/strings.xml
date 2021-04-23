@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">cryptocurrency</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="home_title">Cryptocurrency Quote Now</string>
+    <string name="content_description_image_home">Image that refers to cryptocurrency miners</string>
+    <string name="detail_example_description">Litecoin (LTC) is a cryptocurrency . Users are able to generate LTC through the process of mining. Litecoin has a current supply of 66,752,414.51538747. The last known price of Litecoin is 218.31139077 USD and is down -16.21 over the last 24 hours. It is currently trading on 744 active market(s) with $10,944,104,268.78 traded over the last 24 hours. More information can be found at https://litecoin.org/.</string>
+    <string name="content_description_detail_image">Image with a woman analyzing charts, a reference to an investor.</string>
+    <string name="content_description_icon_back_arrow_detail">Back arrow icon.</string>
+    <string name="offline_message">"Your connection is not active. Activate your connection to continue!"</string>
+    <string name="price_1h">PRICE 1H</string>
+    <string name="price_24h">PRICE 24H</string>
+    <string name="price_7d">PRICE 7D</string>
+</resources>

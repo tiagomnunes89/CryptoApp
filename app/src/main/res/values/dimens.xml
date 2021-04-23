@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Text Dimensions -->
+    <dimen name="font_primary_title">24sp</dimen>
+    <dimen name="font_secondary_title">18sp</dimen>
+    <dimen name="font_tertiary_title">16sp</dimen>
+
+    <!--Sizes-->
+    <dimen name="short_size">16dp</dimen>
+    <dimen name="little_size">8dp</dimen>
+
+    <!--Image Crypto Logo-->
+    <dimen name="crypto_logo_width">100dp</dimen>
+    <dimen name="crypto_logo_height">100dp</dimen>
+</resources>

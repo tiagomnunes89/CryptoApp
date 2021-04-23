@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/little_size"
+    android:background="@drawable/card_format"
+    android:padding="@dimen/short_size">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/contrail_one"
+            android:gravity="start"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_secondary_title"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Bitcoin" />
+
+        <TextView
+            android:id="@+id/price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/contrail_one"
+            android:gravity="end"
+            android:textColor="@color/white"
+            android:textSize="@dimen/font_secondary_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="$50,979.24" />
+
+        <LinearLayout
+            android:id="@+id/linear_price_1h"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/little_size"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/name">
+
+            <TextView
+                android:id="@+id/price1h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/contrail_one"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_secondary_title"
+                tools:text="-0.03" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/contrail_one"
+                android:text="@string/price_1h"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/font_tertiary_title" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/little_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/linear_price_7D"
+            app:layout_constraintStart_toEndOf="@+id/linear_price_1h">
+
+            <TextView
+                android:id="@+id/price24h"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/contrail_one"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_secondary_title"
+                tools:text="-2.03" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/contrail_one"
+                android:text="@string/price_24h"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/font_tertiary_title" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linear_price_7D"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/little_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <TextView
+                android:id="@+id/price7D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/contrail_one"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/font_secondary_title"
+                tools:text="-0.42" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/contrail_one"
+                android:text="@string/price_7d"
+                android:textColor="@color/blue"
+                android:textSize="@dimen/font_tertiary_title" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
