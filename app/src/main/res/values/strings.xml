@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">cryptocurrency</string>
+    <string name="app_name">Cryptus</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="home_title">Cryptocurrency Quote Now</string>
     <string name="content_description_image_home">Image that refers to cryptocurrency miners</string>
