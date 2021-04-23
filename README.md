@@ -1,3 +1,4 @@
+# Punk Beer App
 This is an app demonstrating some of the features that I am able to work on android development. The Coin Market API was used in this app: (https://coinmarketcap.com/api/documentation/v1/).
 
 ## Knowledge used
