@@ -11,6 +11,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import br.dev.tmn.cryptocurrency.R
@@ -25,6 +26,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
 const val RESULT = "RESULT"
+const val CRYPTO_LIST_WORK_NAME = "Call crypto List"
+const val LIST_SIZE = 15
 
 class HomeFragment : Fragment() {
 
@@ -42,6 +45,7 @@ class HomeFragment : Fragment() {
         viewModel.mainStateDetail.observe(::getLifecycle, ::updateDetailUI)
         recyclerView = root.findViewById(R.id.recycler_list)
         navController = requireActivity().findNavController(R.id.nav_host_fragment)
+        viewModel.onListRequest(LIST_SIZE)
         periodicWorkRequest()
         return root
     }
@@ -53,6 +57,7 @@ class HomeFragment : Fragment() {
                 cryptoData.data?.let { setCryptoList(it) }
                 Log.d(RESULT, "ERROR")
             }
+            Status.LOADING ->{}
             Status.SUCCESSFUL -> {
                 cryptoData.data?.let { setCryptoList(it) }
                 Log.d(RESULT, "SUCCESS")
@@ -65,6 +70,7 @@ class HomeFragment : Fragment() {
             Status.ERROR -> {
                 cryptoDetailResponse.error?.message?.let { showMessage(it) }
             }
+            Status.LOADING ->{}
             Status.SUCCESSFUL -> {
                 val fragment = DetailFragment()
                 requireActivity().supportFragmentManager
@@ -80,7 +86,8 @@ class HomeFragment : Fragment() {
         val periodicWorkRequest =
             PeriodicWorkRequest.Builder(WorkerClass::class.java, 15, TimeUnit.MINUTES)
                 .build()
-        WorkManager.getInstance(requireActivity().applicationContext).enqueue(periodicWorkRequest)
+        WorkManager.getInstance(requireActivity().applicationContext)
+            .enqueueUniquePeriodicWork(CRYPTO_LIST_WORK_NAME,  ExistingPeriodicWorkPolicy.REPLACE,periodicWorkRequest)
     }
 
     private fun setCryptoList(cryptoList: List<Crypto>) {
