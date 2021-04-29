@@ -5,17 +5,22 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import br.dev.tmn.cryptocurrency.R
+import com.airbnb.lottie.LottieAnimationView
 
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var coinAnimationLoader: LottieAnimationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (isOnline(this)) {
             setContentView(R.layout.activity_main)
+            coinAnimationLoader = findViewById(R.id.loading_coin)
         } else {
             setContentView(R.layout.activity_main_offline)
         }
@@ -43,6 +48,22 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return false
+    }
+
+    fun showLoading() {
+        coinAnimationLoader.visibility = View.VISIBLE
+    }
+
+    fun hideLoading() {
+        coinAnimationLoader.visibility = View.GONE
+    }
+
+    fun showMessage(message: String) {
+        Toast.makeText(
+            this@MainActivity,
+            message,
+            Toast.LENGTH_LONG
+        ).show()
     }
 }
 

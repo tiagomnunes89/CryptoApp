@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -15,14 +14,13 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import br.dev.tmn.cryptocurrency.R
-import br.dev.tmn.cryptocurrency.data.service.response.CryptoDetailResponse
 import br.dev.tmn.cryptocurrency.domain.entities.Crypto
+import br.dev.tmn.cryptocurrency.ui.MainActivity
 import br.dev.tmn.cryptocurrency.ui.adapters.CryptoAdapter
 import br.dev.tmn.cryptocurrency.ui.utils.Data
 import br.dev.tmn.cryptocurrency.ui.utils.Status
 import br.dev.tmn.cryptocurrency.ui.viewmodels.CryptoViewModel
 import br.dev.tmn.cryptocurrency.ui.workers.WorkerClass
-import com.airbnb.lottie.LottieAnimationView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.concurrent.TimeUnit
 
@@ -35,7 +33,6 @@ class HomeFragment : Fragment() {
     private val viewModel by viewModel<CryptoViewModel>()
     private lateinit var recyclerView: RecyclerView
     private lateinit var navController: NavController
-    private lateinit var coinAnimationLoader: LottieAnimationView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -44,10 +41,8 @@ class HomeFragment : Fragment() {
     ): View? {
         val root = inflater.inflate(R.layout.fragment_home, container, false)
         viewModel.mainStateList.observe(::getLifecycle, ::updateUI)
-        viewModel.mainStateDetail.observe(::getLifecycle, ::updateDetailUI)
         recyclerView = root.findViewById(R.id.recycler_list)
         navController = requireActivity().findNavController(R.id.nav_host_fragment)
-        coinAnimationLoader = root.findViewById(R.id.loading_coin)
         viewModel.onListRequest(LIST_SIZE)
         periodicWorkRequest()
         return root
@@ -56,39 +51,18 @@ class HomeFragment : Fragment() {
     private fun updateUI(cryptoData: Data<List<Crypto>>) {
         when (cryptoData.responseType) {
             Status.ERROR -> {
-                hideLoading()
-                cryptoData.error?.message?.let { showMessage(it) }
+                (activity as MainActivity).hideLoading()
+                cryptoData.error?.message?.let { (activity as MainActivity).showMessage(it) }
                 cryptoData.data?.let { setCryptoList(it) }
                 Log.d(RESULT, "ERROR")
             }
             Status.LOADING -> {
-                showLoading()
+                (activity as MainActivity).showLoading()
             }
             Status.SUCCESSFUL -> {
                 cryptoData.data?.let { setCryptoList(it) }
+                (activity as MainActivity).hideLoading()
                 Log.d(RESULT, "SUCCESS")
-                hideLoading()
-            }
-        }
-    }
-
-    private fun updateDetailUI(cryptoDetailResponse: Data<CryptoDetailResponse>) {
-        when (cryptoDetailResponse.responseType) {
-            Status.ERROR -> {
-                hideLoading()
-                cryptoDetailResponse.error?.message?.let { showMessage(it) }
-            }
-            Status.LOADING -> {
-                showLoading()
-            }
-            Status.SUCCESSFUL -> {
-                val fragment = DetailFragment()
-                requireActivity().supportFragmentManager
-                    .beginTransaction()
-                    .add(R.id.nav_host_fragment, fragment)
-                    .addToBackStack("Home")
-                    .commitAllowingStateLoss()
-                hideLoading()
             }
         }
     }
@@ -109,20 +83,14 @@ class HomeFragment : Fragment() {
         recyclerView.adapter = cryptoAdapter
     }
 
-    private fun showLoading() {
-        coinAnimationLoader.visibility = View.VISIBLE
-    }
-
-    private fun hideLoading() {
-        coinAnimationLoader.visibility = View.GONE
-    }
-
-    private fun showMessage(message: String) {
-        Toast.makeText(activity, message, Toast.LENGTH_LONG).show()
-    }
-
     private fun callClickDetailsService(item: Crypto) {
         viewModel.onClickToCryptoDetails(item.id)
+        val fragment = DetailFragment()
+        requireActivity().supportFragmentManager
+            .beginTransaction()
+            .add(R.id.nav_host_fragment, fragment)
+            .addToBackStack("Home")
+            .commitAllowingStateLoss()
     }
 
     private fun itemClickListener() = object : CryptoAdapter.OnItemClickListener {

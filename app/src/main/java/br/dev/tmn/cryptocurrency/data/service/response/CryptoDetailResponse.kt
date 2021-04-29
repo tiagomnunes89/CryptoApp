@@ -4,10 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 class CryptoDetailResponse(
     @SerializedName("data")
-    val detailData: Map<Int, Item>
+    val detailData: Map<Int, DetailItem>
 )
 
-class Item(
+class DetailItem(
     val id: Long,
     val name: String,
     val symbol: String,

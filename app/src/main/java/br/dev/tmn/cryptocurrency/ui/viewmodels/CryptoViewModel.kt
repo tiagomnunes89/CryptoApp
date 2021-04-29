@@ -2,13 +2,12 @@ package br.dev.tmn.cryptocurrency.ui.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import br.dev.tmn.cryptocurrency.data.service.response.CryptoDetailResponse
+import br.dev.tmn.cryptocurrency.data.service.response.DetailItem
 import br.dev.tmn.cryptocurrency.domain.entities.Crypto
 import br.dev.tmn.cryptocurrency.domain.useCases.GetCryptoDetail
 import br.dev.tmn.cryptocurrency.domain.useCases.GetCryptoList
 import br.dev.tmn.cryptocurrency.domain.utils.Result
 import br.dev.tmn.cryptocurrency.ui.utils.Data
-import br.dev.tmn.cryptocurrency.ui.utils.SharedPreferencesConfig
 import br.dev.tmn.cryptocurrency.ui.utils.Status
 import br.dev.tmn.cryptocurrency.ui.viewmodels.base.BaseViewModel
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class CryptoViewModel(
-    private val sharedPreferencesConfig: SharedPreferencesConfig,
     val getCryptoList: GetCryptoList,
     val getCryptoDetail: GetCryptoDetail
 ) : BaseViewModel() {
@@ -27,8 +25,8 @@ class CryptoViewModel(
             return mutableMainStateList
         }
 
-    private var mutableMainStateDetail = MutableLiveData<Data<CryptoDetailResponse>>()
-    val mainStateDetail: LiveData<Data<CryptoDetailResponse>>
+    private var mutableMainStateDetail = MutableLiveData<Data<DetailItem>>()
+    val mainStateDetail: LiveData<Data<DetailItem>>
         get() {
             return mutableMainStateDetail
         }
@@ -56,8 +54,10 @@ class CryptoViewModel(
             }
             is Result.Success -> {
                 mutableMainStateDetail.value =
-                    Data(responseType = Status.SUCCESSFUL, data = result.data)
-                result.data?.let { sharedPreferencesConfig.saveCurrentCryptoData(it, id.toInt()) }
+                    Data(
+                        responseType = Status.SUCCESSFUL,
+                        data = result.data?.detailData?.get(id.toInt())
+                    )
             }
         }
     }

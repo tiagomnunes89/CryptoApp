@@ -2,7 +2,6 @@ package br.dev.tmn.cryptocurrency
 
 import android.app.Application
 import br.dev.tmn.cryptocurrency.di.repositoriesModule
-import br.dev.tmn.cryptocurrency.di.sharedPreferences
 import br.dev.tmn.cryptocurrency.di.useCasesModule
 import br.dev.tmn.cryptocurrency.di.viewModelModule
 import com.facebook.drawee.backends.pipeline.Fresco
@@ -18,7 +17,7 @@ class CryptoApplication : Application() {
 
         startKoin {
             androidContext(this@CryptoApplication)
-            modules(listOf(repositoriesModule, viewModelModule, useCasesModule, sharedPreferences))
+            modules(listOf(repositoriesModule, viewModelModule, useCasesModule))
         }
     }
 }
