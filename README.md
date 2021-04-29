@@ -7,7 +7,6 @@ This is an app demonstrating some of the features that I am able to work on andr
 - JSON animation with lottie for loader
 - Native animation for lists
 - RecyclerView with list with the first item different from the others and the RecyclerView Adapter
-- SharedPreferences for data persistence
 - Code versioning here on GitHub
 - Full Kotlin project with comprehensive use of resources of the language
 - Object-oriented programming with Kotlin
